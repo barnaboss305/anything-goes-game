@@ -1,0 +1,195 @@
+<!--
+    ============================================
+    ANYTHING GOES - Game Show Web App
+    ============================================
+    Author: Barnaboss Puli
+    LinkedIn: www.linkedin.com/barnaboss-puli
+    Created: December 2025
+    
+    Description: A fun party game inspired by the 
+    Distractible Podcast episode "Anything Goes"
+    
+    This is a fan-made project and is not affiliated 
+    with or endorsed by the Distractible Podcast.
+    
+    Feel free to use, modify, and share!
+    ============================================
+-->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anything Goes!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Orbitron:wght@700;900&family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="theme-toggle">
+        <span class="theme-toggle-label">Theme</span>
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme"></button>
+    </div>
+
+    <button class="help-btn" id="helpBtn" aria-label="Help">?</button>
+
+    <div class="help-overlay" id="helpOverlay">
+        <div class="help-modal">
+            <button class="help-close-btn" id="helpCloseBtn">✕</button>
+            
+            <h2 class="help-modal-title">How to Play</h2>
+            
+            <div class="help-section">
+                <h3 class="help-section-title">Setup</h3>
+                <ul class="help-list">
+                    <li>Enter the names of your two contestants in the scoreboard</li>
+                    <li>One person acts as the host and controls the game</li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 class="help-section-title">The Timer Zone</h3>
+                <ul class="help-list">
+                    <li>Press the big red START button to begin a round</li>
+                    <li>A hidden timer starts (between 1 second and 2 minutes)</li>
+                    <li>The donut chart shows progress but you won't know exactly when time runs out!</li>
+                    <li>When time's up, a loud siren will sound</li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 class="help-section-title">Scoring</h3>
+                <ul class="help-list">
+                    <li>Use the +/- buttons to manually adjust scores anytime</li>
+                    <li>After the siren, dismiss it to reveal the prize wheel</li>
+                    <li>Set your desired point range (min: -20, max: 20)</li>
+                    <li>Spin the wheel and award points to a contestant</li>
+                    <li>Scores can go negative!</li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 class="help-section-title">Winning</h3>
+                <p class="help-text">Play as many rounds as you like! The contestant with the most points at the end wins. But remember... in this game, anything goes!</p>
+            </div>
+            
+            <div class="help-divider"></div>
+            
+            <div class="help-inspiration">
+                <p class="help-inspiration-text">This game is inspired by the Distractible Podcast episode</p>
+                <a href="https://open.spotify.com/episode/3ozehndNErihHKePVIw5ze" target="_blank" rel="noopener noreferrer" class="help-podcast-link">
+                    🎧 "Anything Goes" on Spotify
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="main-title">Anything Goes!</h1>
+
+    <div class="container">
+        <div class="button-panel">
+            <div class="corner-decor top-left"></div>
+            <div class="corner-decor bottom-left"></div>
+            
+            <div class="button-container">
+                <button class="big-button" id="mainButton">
+                    START
+                </button>
+                
+                <div class="donut-container" id="donutContainer">
+                    <svg class="donut-svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="donutGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#7c3aed"/>
+                                <stop offset="50%" style="stop-color:#ec4899"/>
+                                <stop offset="100%" style="stop-color:#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="donut-track" cx="100" cy="100" r="90"/>
+                        <circle class="donut-progress" id="donutProgress" cx="100" cy="100" r="90"/>
+                    </svg>
+                    <div class="donut-center">
+                        <div id="donutPercent">100%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status" id="status">READY</div>
+        </div>
+
+        <div class="score-panel">
+            <div class="corner-decor top-right"></div>
+            <div class="corner-decor bottom-right"></div>
+            
+            <h2 class="scoreboard-title">SCOREBOARD</h2>
+            
+            <div class="scoreboard">
+                <div class="contestant">
+                    <span class="contestant-label">Contestant 1</span>
+                    <input type="text" class="name-input" id="name1" placeholder="Enter name...">
+                    <div class="score-row">
+                        <button class="score-btn" onclick="updateScore(1, -1)">−</button>
+                        <div class="score-display" id="score1">0</div>
+                        <button class="score-btn" onclick="updateScore(1, 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="contestant">
+                    <span class="contestant-label">Contestant 2</span>
+                    <input type="text" class="name-input" id="name2" placeholder="Enter name...">
+                    <div class="score-row">
+                        <button class="score-btn" onclick="updateScore(2, -1)">−</button>
+                        <div class="score-display" id="score2">0</div>
+                        <button class="score-btn" onclick="updateScore(2, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Siren Overlay -->
+    <div class="siren-overlay" id="sirenOverlay">
+        <span class="siren-text">TIME!</span>
+        <button class="dismiss-btn" id="dismissBtn">DISMISS</button>
+    </div>
+
+    <!-- Wheel Overlay -->
+    <div class="wheel-overlay" id="wheelOverlay">
+        <button class="wheel-close-btn" id="wheelCloseBtn">✕</button>
+        
+        <div class="wheel-container">
+            <h2 class="wheel-title">Spin for Points!</h2>
+            
+            <div class="wheel-range-controls">
+                <span class="wheel-range-label">MIN</span>
+                <input type="number" class="wheel-range-input" id="wheelMin" value="0" min="-20" max="20">
+                <span class="wheel-range-label">MAX</span>
+                <input type="number" class="wheel-range-input" id="wheelMax" value="10" min="-20" max="20">
+                <button class="wheel-update-btn" id="wheelUpdateBtn">UPDATE</button>
+            </div>
+            
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer"></div>
+                <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 200 200">
+                </svg>
+                <div class="wheel-center"></div>
+            </div>
+            
+            <div class="wheel-result" id="wheelResult"></div>
+            
+            <div class="wheel-controls">
+                <button class="wheel-spin-btn" id="wheelSpinBtn">SPIN</button>
+                
+                <div class="contestant-select" id="contestantSelect" style="display: none;">
+                    <span class="contestant-select-label">Award points to:</span>
+                    <div class="contestant-btns">
+                        <button class="contestant-btn orange" id="awardBtn1">Contestant 1</button>
+                        <button class="contestant-btn blue" id="awardBtn2">Contestant 2</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
