@@ -15,7 +15,7 @@ A fun party game for 1 host and 2 contestants!
 This game is inspired by the [Distractible Podcast](https://open.spotify.com/episode/3ozehndNErihHKePVIw5ze) episode "Anything Goes" featuring Mark, Wade, and Bob.
 
 ## 👤 Author
-[Your Name]
+Barnaboss Puli
 
 ## 📝 License
 Feel free to use, modify, and share!
