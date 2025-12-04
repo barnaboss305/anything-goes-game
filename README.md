@@ -3,10 +3,10 @@
 A fun party game for 1 host and 2 contestants!
 
 ## 🎮 Play Now
-[Play the game here](https://[your-username].github.io/anything-goes-game/)
+[Play the game here](https://anything-goes-distractible.netlify.app)
 
 ## 🎯 Features
-- Random tension timer (1 second to 3 minutes)
+- Random tension timer (1 second to 2 minutes)
 - Prize wheel with customizable point range (-20 to +20)
 - Light/Dark mode
 - Sound effects
